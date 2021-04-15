@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.cec.vfInputDatMigrator.db.mapper.InterlockWorkStatusMapper">
+	<resultMap id ="BaseResultMap" type="jp.co.cec.vfInputDatMigrator.db.model.InterlockWorkStatus">
+		<result column="exec_date_time" 		jdbcType="TIMESTAMP" 	property="exec_date_time" 		/>
+		<result column="exec_data_flag" 		jdbcType="TINYINT" 		property="exec_data_flag" 		/>
+		<result column="place_id" 				jdbcType="VARCHAR" 		property="place_id" 			/>
+		<result column="serial_number" 			jdbcType="VARCHAR" 		property="serial_number" 		/>
+		<result column="entry_date_time" 		jdbcType="TIMESTAMP" 	property="entry_date_time" 		/>
+		<result column="work_status_key" 		jdbcType="VARCHAR" 		property="work_status_key" 		/>
+		<result column="status_reason_key" 		jdbcType="VARCHAR" 		property="status_reason_key"	/>
+		<result column="status_reason" 			jdbcType="VARCHAR" 		property="status_reason" 		/>
+		<result column="note" 					jdbcType="VARCHAR" 		property="note" 				/>
+		<result column="entry_worker" 			jdbcType="VARCHAR" 		property="entry_worker" 		/>
+		<result column="cancel_flg" 			jdbcType="TINYINT" 		property="cancel_flg" 			/>
+		<result column="cancel_date_time" 		jdbcType="TIMESTAMP" 	property="cancel_date_time"		/>
+		<result column="cancel_reason" 			jdbcType="VARCHAR" 		property="cancel_reason" 		/>
+		<result column="cancel_worker" 			jdbcType="VARCHAR" 		property="cancel_worker" 		/>
+		<result column="inspection_flg" 		jdbcType="TINYINT" 		property="inspection_flg" 		/>
+		<result column="inspection_updated_at" 	jdbcType="TIMESTAMP" 	property="inspection_updated_at"/>
+		<result column="created_by" 			jdbcType="VARCHAR" 		property="created_by" 			/>
+		<result column="created_at" 			jdbcType="TIMESTAMP" 	property="created_at" 			/>
+		<result column="updated_by" 			jdbcType="VARCHAR" 		property="updated_by" 			/>
+		<result column="updated_at" 			jdbcType="TIMESTAMP" 	property="updated_at" 			/> 
+	</resultMap>
+	<select id="linesInterlockWorkStatus" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT 	*
+			FROM 	interlock_work_status
+			WHERE 	exec_date_time	=#{execDateTime	, jdbcType=TIMESTAMP}
+			AND 	place_id		=#{placeId		, jdbcType=VARCHAR	}
+			AND 	serial_number	=#{serialNumber	, jdbcType=VARCHAR	}
+			AND 	entry_date_time	=#{entryDateTime, jdbcType=TIMESTAMP}
+			AND 	work_status_key	=#{workStatusKey, jdbcType=VARCHAR	}
+		]]>
+	</select>
+	<select id="checkInterlockWorkStatus" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT 	*
+			FROM 	interlock_work_status
+			WHERE 	place_id		=#{placeId		, jdbcType=VARCHAR	}
+			AND 	serial_number	=#{serialNumber	, jdbcType=VARCHAR	}
+			AND 	entry_date_time	=#{entryDateTime, jdbcType=TIMESTAMP}
+			AND 	work_status_key	=#{workStatusKey, jdbcType=VARCHAR	}
+		]]>
+	</select>
+	<delete id="deleteInterlockWorkStatusUsingValidityEndOn">
+		<![CDATA[
+			DELETE FROM interlock_work_status
+			WHERE 		exec_date_time<#{validityEndOn, jdbcType=TIMESTAMP}
+		]]>
+	</delete>
+	<delete id="deleteInterlockWorkStatusUsingPrimaryKey">
+		<![CDATA[
+			DELETE FROM interlock_work_status
+			WHERE 		exec_date_time	=#{execDateTime	, jdbcType=TIMESTAMP}
+			AND 		exec_data_flag	=#{execDataFlag	, jdbcType=TINYINT	}
+			AND 		place_id		=#{placeId		, jdbcType=VARCHAR	}
+			AND 		serial_number	=#{serialNumber	, jdbcType=VARCHAR	}
+			AND 		entry_date_time	=#{entryDateTime, jdbcType=TIMESTAMP}
+			AND 		work_status_key	=#{workStatusKey, jdbcType=VARCHAR	}
+		]]>
+	</delete>
+</mapper>

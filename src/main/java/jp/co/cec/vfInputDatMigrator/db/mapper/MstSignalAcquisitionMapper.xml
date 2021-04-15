@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.cec.vfInputDatMigrator.db.mapper.MstSignalAcquisitionMapper">
+	<resultMap id="BaseResultMap" type="jp.co.cec.vfInputDatMigrator.db.model.MstSignalAcquisition">
+		<result column="signal_id" 			jdbcType="VARCHAR" 		property="signalId" 			/>
+		<result column="connector" 			jdbcType="VARCHAR" 		property="connector" 			/>
+		<result column="connector_instance" jdbcType="VARCHAR" 		property="connectorInstance" 	/>
+		<result column="signal_class" 		jdbcType="VARCHAR" 		property="signalClass" 			/>
+		<result column="signal_category" 	jdbcType="VARCHAR" 		property="signalCategory" 		/>
+		<result column="signal_name" 		jdbcType="VARCHAR" 		property="signalName" 			/>
+		<result column="subject_instance" 	jdbcType="VARCHAR" 		property="subjectInstance" 		/>
+		<result column="value_instance" 	jdbcType="VARCHAR" 		property="valueInstance"		/>
+		<result column="conversion" 		jdbcType="VARCHAR" 		property="conversion" 			/>
+		<result column="test_code" 			jdbcType="VARCHAR" 		property="testCode" 			/>
+		<result column="created_by" 		jdbcType="VARCHAR" 		property="createdBy" 			/>
+		<result column="created_at" 		jdbcType="TIMESTAMP" 	property="createdAt" 			/>
+	</resultMap>
+	<select id="lineMstSignalAcquisition" resultMap="BaseResultMap">
+		SELECT 	*
+		FROM 	mst_signal_acquisition
+		WHERE 	signal_class		=#{signalClass		, jdbcType=VARCHAR}
+		AND 	signal_category		=#{signalCategory	, jdbcType=VARCHAR}
+		AND 	signal_name			=#{signalName		, jdbcType=VARCHAR}
+		AND		connector_instance	=#{connectorInstance, jdbcType=VARCHAR}
+		AND		subject_instance	=#{subjectInstance	, jdbcType=VARCHAR}
+		AND		value_instance		=#{valueInstance	, jdbcType=VARCHAR}
+	</select>
+</mapper>

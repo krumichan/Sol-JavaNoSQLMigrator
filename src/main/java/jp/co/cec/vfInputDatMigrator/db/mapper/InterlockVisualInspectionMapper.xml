@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.cec.vfInputDatMigrator.db.mapper.InterlockVisualInspectionMapper">
+	<resultMap id="BaseResultMap" type="jp.co.cec.vfInputDatMigrator.db.model.InterlockVisualInspection">
+		<result column="exec_date_time" 	jdbcType="TIMESTAMP" 	property= "exec_date_time"		/>
+		<result column="exec_data_flag" 	jdbcType="TINYINT" 		property= "exec_data_flag"		/>
+		<result column="place_id" 			jdbcType="VARCHAR" 		property= "place_id"			/>
+		<result column="serial_number" 		jdbcType="VARCHAR" 		property= "serial_number"		/>
+		<result column="entry_date_time" 	jdbcType="TIMESTAMP" 	property= "entry_date_time"		/>
+		<result column="entry_worker" 		jdbcType="VARCHAR" 		property= "entry_worker"		/>
+		<result column="judgment_key" 		jdbcType="VARCHAR" 		property= "judgment_key"		/>
+		<result column="ng_work_status_key" jdbcType="VARCHAR" 		property= "ng_work_status_key"	/>
+		<result column="status_reason_key" 	jdbcType="VARCHAR" 		property= "status_reason_key"	/>
+		<result column="status_reason" 		jdbcType="VARCHAR" 		property= "status_reason"		/>
+		<result column="note" 				jdbcType="VARCHAR" 		property= "note"				/>
+		<result column="created_by" 		jdbcType="VARCHAR" 		property= "created_by"			/>
+		<result column="created_at" 		jdbcType="TIMESTAMP" 	property= "created_at"			/>
+		<result column="updated_by" 		jdbcType="VARCHAR" 		property= "updated_by"			/>
+		<result column="updated_at" 		jdbcType="TIMESTAMP" 	property= "updated_at"			/>
+	</resultMap>
+	<select id="linesInterlockVisualInspection" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT 	*
+			FROM 	interlock_visual_inspection
+			WHERE 	place_id		=#{placeId		, jdbcType=VARCHAR	}
+			AND 	serial_number	=#{serialNumber	, jdbcType=VARCHAR	}
+			AND 	entry_date_time	=#{entryDateTime, jdbcType=TIMESTAMP}
+			AND 	judgment_key	=#{judgmentKey	, jdbcType=VARCHAR	}
+		]]>
+	</select>
+	<select id="linesInterlockVisualInspectionNonJudgmentKey" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT 	*
+			FROM 	interlock_visual_inspection
+			WHERE 	place_id		=#{placeId		, jdbcType=VARCHAR	}
+			AND 	serial_number	=#{serialNumber	, jdbcType=VARCHAR	}
+			AND 	entry_date_time	=#{entryDateTime, jdbcType=TIMESTAMP}
+		]]>
+	</select>
+	<delete id="deleteInterlockVisualInspectionUsingValidityEndOn">
+		<![CDATA[
+			DELETE FROM interlock_visual_inspection
+			WHERE 		exec_date_time<#{validityEndOn, jdbcType=TIMESTAMP}
+		]]>
+	</delete>
+	<delete id="deleteInterlockVisualInspectionUsingPrimaryKey">
+		<![CDATA[
+			DELETE FROM interlock_visual_inspection
+			WHERE 		exec_date_time	=#{execDateTime	, jdbcType=TIMESTAMP}
+			AND 		exec_data_flag	=#{execDataFlag	, jdbcType=TINYINT	}
+			AND 		place_id		=#{placeId		, jdbcType=VARCHAR	}
+			AND 		serial_number	=#{serialNumber	, jdbcType=VARCHAR	}
+			AND 		entry_date_time	=#{entryDateTime, jdbcType=TIMESTAMP}
+		]]>
+	</delete>
+</mapper>	

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.cec.vfInputDatMigrator.db.mapper.InterlockSeqMapper">
+	<resultMap id="BaseResultMap" type="jp.co.cec.vfInputDatMigrator.db.model.InterlockSeq">
+		<result column="exec_date_time" jdbcType="TIMESTAMP" 	property="execDateTime" />
+		<result column="exec_dml" 		jdbcType="VARCHAR" 		property="execDml" 		/>
+		<result column="exec_table" 	jdbcType="VARCHAR" 		property="execTable" 	/>
+		<result column="key1" 			jdbcType="VARCHAR" 		property="key1" 		/>
+		<result column="key2" 			jdbcType="VARCHAR" 		property="key2" 		/>
+		<result column="key3" 			jdbcType="VARCHAR" 		property="key3" 		/>
+		<result column="key4" 			jdbcType="VARCHAR" 		property="key4" 		/>
+	</resultMap>
+	<select id="queryInterlockSeqs" parameterType="jp.co.cec.vfInputDatMigrator.db.model.InterlockSeq" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT 		*
+			FROM 		interlock_seq
+			ORDER BY 	exec_date_time, exec_table ASC
+			LIMIT 		#{selLimit, jdbcType=INTEGER}
+		]]>
+	</select>
+	<delete id="deleteInterlockSeqUsingValidityEndOn">
+		<![CDATA[
+			DELETE FROM interlock_seq
+			WHERE 		exec_date_time<#{validityEndOn, jdbcType=TIMESTAMP}
+		]]>
+	</delete>
+	<delete id="deleteInterlockSeqUsingPrimaryKey">
+		<![CDATA[
+			DELETE FROM interlock_seq
+			WHERE 		exec_date_time	=#{execDateTime	, jdbcType=TIMESTAMP}
+			AND 		exec_table		=#{execTable	, jdbcType=VARCHAR}
+		]]>
+	</delete>
+	<select id="checkRemnantInterlockSeq" resultType="int">
+		<![CDATA[
+			SELECT 	COUNT(*)
+			FROM 	interlock_seq
+		]]>
+	</select> 
+</mapper>
